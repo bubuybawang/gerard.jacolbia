@@ -15,6 +15,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.tests.pages.HomePage;
 
 /**
  * Test case 1:
@@ -55,13 +56,11 @@ public class TestCaseOne {
 
     @Test
     public void runTest() {
-        WebDriverWait wait = new WebDriverWait(driver, Configuration.timeout());
         // 1. From the home page go to contact page
-        driver.get("http://jupiter.cloud.planittesting.com/");
-        WebElement contactPageLink = driver.findElement(By.id("nav-contact"));
-        contactPageLink.click();
+        HomePage homePage = new HomePage(driver);
+        homePage.navigate();
+        homePage.clickContact();
         // TODO Change to pageobject, loadablecomponent?
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@class, 'btn-contact') and contains(@ui-event,'onSubmit') and text()='Submit']")));
         // 2. Click submit button
         WebElement submitButton = driver.findElement(By.xpath("//a[contains(@class, 'btn-contact') and contains(@ui-event,'onSubmit') and text()='Submit']"));
         submitButton.click();
