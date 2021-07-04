@@ -15,6 +15,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.tests.pages.ContactPage;
 import planit.gjacolbia.tests.pages.HomePage;
 
 /**
@@ -59,16 +60,14 @@ public class TestCaseOne {
         // 1. From the home page go to contact page
         HomePage homePage = new HomePage(driver);
         homePage.navigate();
-        homePage.clickContact();
+        ContactPage contactPage = homePage.clickContact();
         // TODO Change to pageobject, loadablecomponent?
         // 2. Click submit button
-        WebElement submitButton = driver.findElement(By.xpath("//a[contains(@class, 'btn-contact') and contains(@ui-event,'onSubmit') and text()='Submit']"));
-        submitButton.click();
+        contactPage.clickSubmit();
         // 3. Validate errors
         // Header error
-        WebElement headerMessage = driver.findElement(By.xpath("//div[@id='header-message']/div[contains(@class, 'alert ')]"));
-        Assert.assertTrue(headerMessage.getAttribute("class").contains("alert-error"), "Contact form Header Error is present.");
-        Assert.assertEquals(headerMessage.getText(), "We welcome your feedback - but we won't get it unless you complete the form correctly.", "Header Error message is correct.");
+        Assert.assertTrue(contactPage.isHeaderMessageAnError(), "Contact form Header Error is present.");
+        Assert.assertEquals(contactPage.getHeaderMessageText(), "We welcome your feedback - but we won't get it unless you complete the form correctly.", "Header Error message is correct.");
         // Forename error
         // TODO: Good candidate for component
         WebElement forenameField = driver.findElement(By.id("forename"));
@@ -106,17 +105,19 @@ public class TestCaseOne {
         messageField.sendKeys("The quick brown fox jumped over the lazy dog.");
         // 5. Validate errors are gone
         // Header
-        headerMessage = driver.findElement(By.xpath("//div[@id='header-message']/div[contains(@class, 'alert ')]"));
-        Assert.assertTrue(headerMessage.getAttribute("class").contains("alert-info"), "Header Message is no longer an error message.");
-        Assert.assertEquals(headerMessage.getText(), "We welcome your feedback - tell it how it is.", "Header message is no longer an error message.");
+        Assert.assertFalse(contactPage.isHeaderMessageAnError(), "Header Message is no longer an error message.");
+        Assert.assertEquals(contactPage.getHeaderMessageText(), "We welcome your feedback - tell it how it is.", "Header message is no longer an error message.");
         // Forename
         Assert.assertFalse(forenameControlGroup.getAttribute("class").contains("error"), "Forename control group is no longer marked as invalid.");
+        // TODO Use util for elementNotPresent
         Assert.assertTrue(driver.findElements(By.id("forename-err")).isEmpty(), "Forename field error message is no longer displayed.");
         // Email
         Assert.assertFalse(emailControlGroup.getAttribute("class").contains("error"), "Email control group is no longer marked as invalid.");
+        // TODO Use util for elementNotPresent
         Assert.assertTrue(driver.findElements(By.id("email-err")).isEmpty(), "Email field error message is no longer displayed.");
         // Message
         Assert.assertFalse(messageControlGroup.getAttribute("class").contains("error"), "Message control group is no longer marked as invalid.");
+        // TODO Use util for elementNotPresent
         Assert.assertTrue(driver.findElements(By.id("message-err")).isEmpty(), "Message field error message is no longer displayed.");
 
     }
