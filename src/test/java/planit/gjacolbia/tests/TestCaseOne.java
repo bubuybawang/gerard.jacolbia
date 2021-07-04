@@ -55,7 +55,7 @@ public class TestCaseOne {
 
     @Test
     public void runTest() {
-        WebDriverWait wait = new WebDriverWait(driver, Long.parseLong(Configuration.get("timeout")));
+        WebDriverWait wait = new WebDriverWait(driver, Configuration.timeout());
         // 1. From the home page go to contact page
         driver.get("http://jupiter.cloud.planittesting.com/");
         WebElement contactPageLink = driver.findElement(By.id("nav-contact"));
