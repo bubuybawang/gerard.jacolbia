@@ -5,12 +5,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import planit.gjacolbia.framework.Configuration;
 
 /**
  * Test case 1:
@@ -25,9 +29,23 @@ public class TestCaseOne {
 
     @BeforeTest
     public void setUp() {
-        // TODO: Set browser to use via config
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        // TODO: Have a driver manager class
+        switch (Configuration.get("browser").toLowerCase()) {
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "opera":
+                WebDriverManager.operadriver().setup();
+                driver = new OperaDriver();
+            default:
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+        }
     }
 
     @AfterTest
