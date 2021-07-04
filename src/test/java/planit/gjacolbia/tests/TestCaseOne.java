@@ -1,9 +1,11 @@
 package planit.gjacolbia.tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -26,10 +28,8 @@ public class TestCaseOne {
 
     @BeforeTest
     public void setUp() {
-        // TODO: Use WebDriverManager
         // TODO: Set browser to use via config
-        System.setProperty("webdriver.gecko.driver", new File("drivers/geckodriver").getAbsolutePath());
-        System.setProperty("webdriver.chrome.driver", new File("drivers/chromedriver").getAbsolutePath());
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
     }
 
