@@ -15,6 +15,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.tests.components.ContactForm;
 import planit.gjacolbia.tests.pages.ContactPage;
 import planit.gjacolbia.tests.pages.HomePage;
 
@@ -63,19 +64,18 @@ public class TestCaseOne {
         ContactPage contactPage = homePage.clickContact();
         // TODO Change to pageobject, loadablecomponent?
         // 2. Click submit button
-        contactPage.clickSubmit();
+        contactPage.withContactForm().clickSubmit();
         // 3. Validate errors
         // Header error
         Assert.assertTrue(contactPage.isHeaderMessageAnError(), "Contact form Header Error is present.");
         Assert.assertEquals(contactPage.getHeaderMessageText(), "We welcome your feedback - but we won't get it unless you complete the form correctly.", "Header Error message is correct.");
         // Forename error
         // TODO: Good candidate for component
-        WebElement forenameField = driver.findElement(By.id("forename"));
-        WebElement forenameControlGroup = driver.findElement(By.xpath("//input[@id='forename']/ancestor::div[contains(@class, 'control-group')]"));
-        WebElement forenameErrorMessage = driver.findElement(By.id("forename-err"));
-        Assert.assertTrue(forenameControlGroup.getAttribute("class").contains("error"), "Forename control-group is marked invalid");
-        Assert.assertTrue(forenameField.getAttribute("class").contains("ng-invalid"), "Forename field is marked invalid.");
-        Assert.assertEquals(forenameErrorMessage.getText(), "Forename is required", "Forename field error message is displayed and correct");
+//        WebElement forenameField = driver.findElement(By.id("forename"));
+//        WebElement forenameControlGroup = driver.findElement(By.xpath("//input[@id='forename']/ancestor::div[contains(@class, 'control-group')]"));
+//        WebElement forenameErrorMessage = driver.findElement(By.id("forename-err"));
+        Assert.assertTrue(contactPage.withContactForm().isFieldInvalid(ContactForm.Field.FORENAME), "Forename field is marked invalid.");
+        Assert.assertEquals(contactPage.withContactForm().getFieldErrorMessage(ContactForm.Field.FORENAME), "Forename is required", "Forename field error message is displayed and correct");
         // Email error
         WebElement emailField = driver.findElement(By.id("email"));
         WebElement emailControlGroup = driver.findElement(By.xpath("//input[@id='email']/ancestor::div[contains(@class, 'control-group')]"));
@@ -92,9 +92,10 @@ public class TestCaseOne {
         Assert.assertEquals(messageErrorMessage.getText(), "Message is required", "Message field error message is displayed and correct");
         // 4. Populate Mandatory Fields
         // TODO Repeating pattern...
-        forenameField.click();
-        forenameField.clear();
-        forenameField.sendKeys("Gerard");
+//        forenameField.click();
+//        forenameField.clear();
+//        forenameField.sendKeys("Gerard");
+        contactPage.withContactForm().fill(ContactForm.Field.FORENAME, "Gerard");
 
         emailField.click();
         emailField.clear();
@@ -108,7 +109,7 @@ public class TestCaseOne {
         Assert.assertFalse(contactPage.isHeaderMessageAnError(), "Header Message is no longer an error message.");
         Assert.assertEquals(contactPage.getHeaderMessageText(), "We welcome your feedback - tell it how it is.", "Header message is no longer an error message.");
         // Forename
-        Assert.assertFalse(forenameControlGroup.getAttribute("class").contains("error"), "Forename control group is no longer marked as invalid.");
+        Assert.assertFalse(contactPage.withContactForm().isFieldInvalid(ContactForm.Field.FORENAME), "Forename field is no longer marked as invalid.");
         // TODO Use util for elementNotPresent
         Assert.assertTrue(driver.findElements(By.id("forename-err")).isEmpty(), "Forename field error message is no longer displayed.");
         // Email

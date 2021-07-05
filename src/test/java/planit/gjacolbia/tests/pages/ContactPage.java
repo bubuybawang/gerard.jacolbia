@@ -10,23 +10,28 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.tests.components.ContactForm;
 
 public class ContactPage extends LoadableComponent<ContactPage> {
     WebDriver driver;
-    private static final By PAGE_LOADED_INDICATOR = By.xpath("//a[contains(@class, 'btn-contact') and contains(@ui-event,'onSubmit') and text()='Submit']");
+    private static final By PAGE_LOADED_INDICATOR = By.id("nav-contact");
 
-    @FindBy(xpath = "//a[contains(@class, 'btn-contact') and contains(@ui-event,'onSubmit') and text()='Submit']")
-    WebElement submitButton;
+    ContactForm contactForm;
     @FindBy(xpath = "//div[@id='header-message']/div[contains(@class, 'alert ')]")
     WebElement headerMessage;
 
     public ContactPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        contactForm = new ContactForm(driver, this).get();
+    }
+
+    public ContactForm withContactForm() {
+        return this.contactForm;
     }
 
     public void clickSubmit() {
-        submitButton.click();
+        contactForm.clickSubmit();
     }
 
     public String getHeaderMessageText() {
