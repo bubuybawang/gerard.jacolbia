@@ -30,18 +30,42 @@ public class ContactForm extends LoadableComponent<ContactForm> {
 
     @FindBy(xpath = "//a[contains(@class, 'btn-contact') and contains(@ui-event,'onSubmit') and text()='Submit']")
     WebElement submitButton;
+    // Forename
     @FindBy(xpath = "//input[@id='forename']/ancestor::div[contains(@class, 'control-group')]")
     WebElement forenameControlGroup;
     @FindBy(id = "forename")
     WebElement forenameField;
     @FindBy(id = "forename-err")
     WebElement forenameErrorMessage;
+    // Surname
     @FindBy(xpath = "//input[@id='surname']/ancestor::div[contains(@class, 'control-group')]")
     WebElement surnameControlGroup;
     @FindBy(id = "surname")
     WebElement surnameField;
     @FindBy(id = "surname-err")
     WebElement surnameErrorMessage;
+    // Email
+    @FindBy(xpath = "//input[@id='email']/ancestor::div[contains(@class, 'control-group')]")
+    WebElement emailControlGroup;
+    @FindBy(id = "email")
+    WebElement emailField;
+    @FindBy(id = "email-err")
+    WebElement emailErrorMessage;
+    // Telephone
+    @FindBy(xpath = "//input[@id='telephone']/ancestor::div[contains(@class, 'control-group')]")
+    WebElement telephoneControlGroup;
+    @FindBy(id = "telephone")
+    WebElement telephoneField;
+    @FindBy(id = "telephone-err")
+    WebElement telephoneErrorMessage;
+    // Message
+    @FindBy(xpath = "//textarea[@id='message']/ancestor::div[contains(@class, 'control-group')]")
+    WebElement messageControlGroup;
+    @FindBy(id = "message")
+    WebElement messageField;
+    @FindBy(id = "message-err")
+    WebElement messageErrorMessage;
+
 
     public ContactForm(WebDriver driver, LoadableComponent<?> parent) {
         this.driver = driver;
@@ -60,28 +84,28 @@ public class ContactForm extends LoadableComponent<ContactForm> {
             System.out.println("Nope...");
         }
 
-//        switch (field) {
-//            case FORENAME:
-//                return this.forenameControlGroup.getAttribute("class").contains("error") && this.forenameField.getAttribute("class").contains("ng-invalid");
-//            case SURNAME:
-//                return this.surnameControlGroup.getAttribute("class").contains("error") && this.surnameField.getAttribute("class").contains("ng-invalid");
-//        }
         return false;
     }
 
+    public String getFieldErrorMessage(Field field) {
+        if (isFieldInvalid(field)) {
+            var classFields = ContactForm.class.getDeclaredFields();
+            Optional<WebElement> errorMessageElement = Arrays.stream(classFields).filter(classField -> isFormErrorElement(classField, field)).map(this::mapToWebElement).findFirst();
+            if (errorMessageElement.isPresent()) {
+                return errorMessageElement.get().getText();
+            } else {
+                // TODO Logger
+                System.out.println("Nope...");
+            }
+        }
+        return "";
+    }
+
     private boolean isControlGroupElement(java.lang.reflect.Field classField, Field formField) {
-//        String classFieldName = classField.getName();
-//        return classField.getType().equals(WebElement.class)
-//                && classFieldName.startsWith(formField.name().toLowerCase())
-//                && classFieldName.endsWith("ControlGroup");
         return isWebElementOfPrefixSuffix(classField, formField.name().toLowerCase(), "ControlGroup");
     }
 
     private boolean isFormFieldElement(java.lang.reflect.Field classField, Field formField) {
-//        String classFieldName = classField.getName();
-//        return classField.getType().equals(WebElement.class)
-//                && classFieldName.startsWith(formField.name().toLowerCase())
-//                && classFieldName.endsWith("Field");
         return isWebElementOfPrefixSuffix(classField, formField.name().toLowerCase(), "Field");
     }
 
@@ -106,36 +130,10 @@ public class ContactForm extends LoadableComponent<ContactForm> {
         }
     }
 
-    public String getFieldErrorMessage(Field field) {
-        if (isFieldInvalid(field)) {
-            var classFields = ContactForm.class.getDeclaredFields();
-            Optional<WebElement> errorMessageElement = Arrays.stream(classFields).filter(classField -> isFormErrorElement(classField, field)).map(this::mapToWebElement).findFirst();
-            if (errorMessageElement.isPresent()) {
-                return errorMessageElement.get().getText();
-            } else {
-                // TODO Logger
-                System.out.println("Nope...");
-            }
-        }
-        return "";
-//        switch (field) {
-//            case FORENAME:
-//                if (isFieldInvalid(field))
-//                    return this.forenameErrorMessage.getText();
-//                else
-//                    return "";
-//            case SURNAME:
-//                if (isFieldInvalid(field))
-//                    return this.surnameErrorMessage.getText();
-//                else
-//                    return "";
-//        }
-//        return "";
-    }
-
     public void fill(Field field, String text) {
         switch (field) {
             case FORENAME:
+                // TODO Repeating pattern...
                 this.forenameField.click();
                 this.forenameField.clear();
                 this.forenameField.sendKeys(text);
@@ -144,6 +142,21 @@ public class ContactForm extends LoadableComponent<ContactForm> {
                 this.surnameField.click();
                 this.surnameField.clear();
                 this.surnameField.sendKeys(text);
+                break;
+            case EMAIL:
+                this.emailField.click();
+                this.emailField.clear();
+                this.emailField.sendKeys(text);
+                break;
+            case TELEPHONE:
+                this.telephoneField.click();
+                this.telephoneField.clear();
+                this.telephoneField.sendKeys(text);
+                break;
+            case MESSAGE:
+                this.messageField.click();
+                this.messageField.clear();
+                this.messageField.sendKeys(text);
                 break;
         }
     }
