@@ -24,15 +24,11 @@ public class ContactPage extends LoadableComponent<ContactPage> {
     public ContactPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        contactForm = new ContactForm(driver, this).get();
+        contactForm = new ContactForm(driver, this);
     }
 
     public ContactForm withContactForm() {
-        return this.contactForm;
-    }
-
-    public void clickSubmit() {
-        contactForm.clickSubmit();
+        return this.contactForm.get();
     }
 
     public String getHeaderMessageText() {
