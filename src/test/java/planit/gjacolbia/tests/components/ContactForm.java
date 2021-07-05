@@ -74,6 +74,7 @@ public class ContactForm extends LoadableComponent<ContactForm> {
     }
 
     public boolean isFieldInvalid(Field field) {
+        // TODO have a field getter, then throw if not found
         var classFields = ContactForm.class.getDeclaredFields();
         Optional<WebElement> controlGroupElement = Arrays.stream(classFields).filter(classField -> isControlGroupElement(classField, field)).map(this::mapToWebElement).findFirst();
         Optional<WebElement> formFieldElement = Arrays.stream(classFields).filter(classField -> isFormFieldElement(classField, field)).map(this::mapToWebElement).findFirst();
@@ -131,33 +132,15 @@ public class ContactForm extends LoadableComponent<ContactForm> {
     }
 
     public void fill(Field field, String text) {
-        switch (field) {
-            case FORENAME:
-                // TODO Repeating pattern...
-                this.forenameField.click();
-                this.forenameField.clear();
-                this.forenameField.sendKeys(text);
-                break;
-            case SURNAME:
-                this.surnameField.click();
-                this.surnameField.clear();
-                this.surnameField.sendKeys(text);
-                break;
-            case EMAIL:
-                this.emailField.click();
-                this.emailField.clear();
-                this.emailField.sendKeys(text);
-                break;
-            case TELEPHONE:
-                this.telephoneField.click();
-                this.telephoneField.clear();
-                this.telephoneField.sendKeys(text);
-                break;
-            case MESSAGE:
-                this.messageField.click();
-                this.messageField.clear();
-                this.messageField.sendKeys(text);
-                break;
+        var classFields = ContactForm.class.getDeclaredFields();
+        Optional<WebElement> formFieldElement = Arrays.stream(classFields).filter(classField -> isFormFieldElement(classField, field)).map(this::mapToWebElement).findFirst();
+        if (formFieldElement.isPresent()) {
+            formFieldElement.get().click();
+            formFieldElement.get().clear();
+            formFieldElement.get().sendKeys(text);
+        } else {
+            // TODO logger
+            System.out.print("Nope....");
         }
     }
 

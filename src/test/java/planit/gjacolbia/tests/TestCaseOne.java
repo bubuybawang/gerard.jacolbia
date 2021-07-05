@@ -59,7 +59,6 @@ public class TestCaseOne {
         HomePage homePage = new HomePage(driver);
         homePage.navigate();
         ContactPage contactPage = homePage.clickContact();
-        // TODO Change to pageobject, loadablecomponent?
         // 2. Click submit button
         contactPage.withContactForm().clickSubmit();
         // 3. Validate errors
@@ -67,7 +66,6 @@ public class TestCaseOne {
         Assert.assertTrue(contactPage.isHeaderMessageAnError(), "Contact form Header Error is present.");
         Assert.assertEquals(contactPage.getHeaderMessageText(), "We welcome your feedback - but we won't get it unless you complete the form correctly.", "Header Error message is correct.");
         // Forename error
-        // TODO: Good candidate for component
         Assert.assertTrue(contactPage.withContactForm().isFieldInvalid(ContactForm.Field.FORENAME), "Forename field is marked invalid.");
         Assert.assertEquals(contactPage.withContactForm().getFieldErrorMessage(ContactForm.Field.FORENAME), "Forename is required", "Forename field error message is displayed and correct");
         // Email error
