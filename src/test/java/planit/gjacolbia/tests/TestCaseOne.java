@@ -25,35 +25,7 @@ import planit.gjacolbia.tests.pages.HomePage;
  * 4. Populate mandatory fields
  * 5. Validate errors are gone
  */
-public class TestCaseOne {
-    WebDriver driver;
-
-    @BeforeTest
-    public void setUp() {
-        // TODO: Have a driver manager class
-        switch (Configuration.get("browser").toLowerCase()) {
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-                break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
-                break;
-            case "opera":
-                WebDriverManager.operadriver().setup();
-                driver = new OperaDriver();
-            default:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-        }
-    }
-
-    @AfterTest
-    public void tearDown() {
-        driver.quit();
-    }
-
+public class TestCaseOne extends BaseTest {
     @Test
     public void runTest() {
         // 1. From the home page go to contact page
