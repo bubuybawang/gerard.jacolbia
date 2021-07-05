@@ -12,6 +12,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.helpers.ElementHelper;
 import planit.gjacolbia.tests.components.ContactForm;
 import planit.gjacolbia.tests.pages.ContactPage;
 import planit.gjacolbia.tests.pages.HomePage;
@@ -84,16 +85,13 @@ public class TestCaseOne {
         Assert.assertEquals(contactPage.getHeaderMessageText(), "We welcome your feedback - tell it how it is.", "Header message is no longer an error message.");
         // Forename
         Assert.assertFalse(contactPage.withContactForm().isFieldInvalid(ContactForm.Field.FORENAME), "Forename field is no longer marked as invalid.");
-        // TODO Use util for elementNotPresent
-        Assert.assertTrue(driver.findElements(By.id("forename-err")).isEmpty(), "Forename field error message is no longer displayed.");
+        Assert.assertFalse(ElementHelper.isElementPresent(contactPage.withContactForm().getFormFieldWebElement(ContactForm.Field.FORENAME, ContactForm.FieldType.ERROR_MESSAGE)), "Forename field error message is no longer displayed.");
         // Email
         Assert.assertFalse(contactPage.withContactForm().isFieldInvalid(ContactForm.Field.EMAIL), "Email field is no longer marked as invalid.");
-        // TODO Use util for elementNotPresent
-        Assert.assertTrue(driver.findElements(By.id("email-err")).isEmpty(), "Email field error message is no longer displayed.");
+        Assert.assertFalse(ElementHelper.isElementPresent(contactPage.withContactForm().getFormFieldWebElement(ContactForm.Field.EMAIL, ContactForm.FieldType.ERROR_MESSAGE)), "Email field error message is no longer displayed.");
         // Message
         Assert.assertFalse(contactPage.withContactForm().isFieldInvalid(ContactForm.Field.MESSAGE), "Message control group is no longer marked as invalid.");
-        // TODO Use util for elementNotPresent
-        Assert.assertTrue(driver.findElements(By.id("message-err")).isEmpty(), "Message field error message is no longer displayed.");
+        Assert.assertFalse(ElementHelper.isElementPresent(contactPage.withContactForm().getFormFieldWebElement(ContactForm.Field.MESSAGE, ContactForm.FieldType.ERROR_MESSAGE)), "Message field error message is no longer displayed.");
 
     }
 

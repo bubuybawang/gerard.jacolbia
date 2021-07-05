@@ -25,7 +25,7 @@ public class ContactForm extends LoadableComponent<ContactForm> {
         MESSAGE
     }
 
-    enum FieldType {
+    public enum FieldType {
         CONTROL_GROUP("ControlGroup"),
         FIELD("Field"),
         ERROR_MESSAGE("ErrorMessage");
@@ -99,6 +99,10 @@ public class ContactForm extends LoadableComponent<ContactForm> {
             return errorMessageElement.getText();
         }
         return "";
+    }
+
+    public WebElement getFormFieldWebElement(Field formField, FieldType formFieldType) {
+        return getWebElementReflection(formField, formFieldType);
     }
 
     private WebElement getWebElementReflection(Field formField, FieldType formFieldType) {
