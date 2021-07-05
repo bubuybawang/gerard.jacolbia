@@ -1,8 +1,11 @@
 package planit.gjacolbia.framework;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+@Log4j2
 public final class Configuration {
     private static final long DEFAULT_TIMEOUT = 10;
     private Configuration() {}
@@ -16,8 +19,7 @@ public final class Configuration {
         try {
             return config.getString(key);
         } catch (NullPointerException | MissingResourceException | ClassCastException e) {
-            // TODO Use logger
-            System.out.println("Unable to get value for key " + key);
+            log.warn("Unable to get value for key " + key);
             return "";
         }
     }
@@ -26,8 +28,7 @@ public final class Configuration {
         try {
             return Long.parseLong(get("timeout"));
         } catch (NumberFormatException nfe) {
-            // TODO Use logger
-            System.out.println("Unable to parse timeout value. Using default timeout of " + DEFAULT_TIMEOUT);
+            log.warn("Unable to parse timeout value. Using default timeout of " + DEFAULT_TIMEOUT);
             return DEFAULT_TIMEOUT;
         }
     }

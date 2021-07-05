@@ -1,5 +1,6 @@
 package planit.gjacolbia.tests.components;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,7 @@ import planit.gjacolbia.framework.Configuration;
 import java.util.Arrays;
 import java.util.Optional;
 
+@Log4j2
 public class ContactForm extends LoadableComponent<ContactForm> {
     public enum Field {
         FORENAME,
@@ -82,7 +84,7 @@ public class ContactForm extends LoadableComponent<ContactForm> {
         if (controlGroupElement.isPresent() && formFieldElement.isPresent()) {
             return controlGroupElement.get().getAttribute("class").contains("error") && formFieldElement.get().getAttribute("class").contains("ng-invalid");
         } else {
-            System.out.println("Nope...");
+            log.error(field + " does not have a ControlGroup element or a FieldElement in the page object.");
         }
 
         return false;
@@ -90,13 +92,13 @@ public class ContactForm extends LoadableComponent<ContactForm> {
 
     public String getFieldErrorMessage(Field field) {
         if (isFieldInvalid(field)) {
+            // TODO have a field getter, then throw if not found
             var classFields = ContactForm.class.getDeclaredFields();
             Optional<WebElement> errorMessageElement = Arrays.stream(classFields).filter(classField -> isFormErrorElement(classField, field)).map(this::mapToWebElement).findFirst();
             if (errorMessageElement.isPresent()) {
                 return errorMessageElement.get().getText();
             } else {
-                // TODO Logger
-                System.out.println("Nope...");
+                log.error(field + " does not have a FieldElement in the page object.");
             }
         }
         return "";
@@ -125,8 +127,6 @@ public class ContactForm extends LoadableComponent<ContactForm> {
         try {
             return (WebElement) classField.get(this);
         } catch (IllegalAccessException e) {
-            // TODO Use logger here
-            e.printStackTrace();
             throw new Error("classField should be of type WebElement before being passed to Mapper. Ensure that this has been filtered.");
         }
     }
@@ -139,8 +139,7 @@ public class ContactForm extends LoadableComponent<ContactForm> {
             formFieldElement.get().clear();
             formFieldElement.get().sendKeys(text);
         } else {
-            // TODO logger
-            System.out.print("Nope....");
+            log.error(field + " does not have a FieldElement in the page object.");
         }
     }
 
