@@ -15,7 +15,7 @@ import planit.gjacolbia.tests.components.ContactForm;
 
 public class ContactPage extends LoadableComponent<ContactPage> {
     WebDriver driver;
-    private static final By PAGE_LOADED_INDICATOR = By.id("nav-contact");
+    private static final By PAGE_LOADED_INDICATOR = By.xpath("//li[@id='nav-contact' and @class='active']");
 
     ContactForm contactForm;
     @FindBy(xpath = "//div[@id='header-message']/div[contains(@class, 'alert ')]")

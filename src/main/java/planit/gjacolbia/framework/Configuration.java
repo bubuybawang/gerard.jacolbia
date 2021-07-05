@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 @Log4j2
 public final class Configuration {
-    private static final long DEFAULT_TIMEOUT = 10;
+    private static final int DEFAULT_TIMEOUT = 10;
     private Configuration() {}
 
     private static ResourceBundle config;
@@ -24,9 +24,9 @@ public final class Configuration {
         }
     }
 
-    public static long timeout() {
+    public static int timeout() {
         try {
-            return Long.parseLong(get("timeout"));
+            return Integer.parseInt(get("timeout"));
         } catch (NumberFormatException nfe) {
             log.warn("Unable to parse timeout value. Using default timeout of " + DEFAULT_TIMEOUT);
             return DEFAULT_TIMEOUT;

@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
+import planit.gjacolbia.tests.pages.ContactFormSubmittedPage;
 
 import java.util.Arrays;
 
@@ -126,8 +127,17 @@ public class ContactForm extends LoadableComponent<ContactForm> {
         formFieldElement.sendKeys(text);
     }
 
-    public void clickSubmit() {
+    public ContactFormSubmittedPage clickSubmit() {
         this.submitButton.click();
+        if (!isAnyFieldInvalid()) {
+            return new ContactFormSubmittedPage(driver).get();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean isAnyFieldInvalid() {
+        return Arrays.stream(Field.values()).anyMatch(this::isFieldInvalid);
     }
 
     @Override
