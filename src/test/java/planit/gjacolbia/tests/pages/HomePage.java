@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.helpers.ElementHelper;
 
 public class HomePage extends LoadableComponent<HomePage> {
     private static final String URL = "http://jupiter.cloud.planittesting.com/";
@@ -42,7 +43,6 @@ public class HomePage extends LoadableComponent<HomePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        // TODO Use util for elementNotPresent
-        Assert.assertFalse(driver.findElements(PAGE_LOADED_INDICATOR).isEmpty(), "Home page not yet loaded");
+        Assert.assertTrue(ElementHelper.isElementByLocationPresent(driver, PAGE_LOADED_INDICATOR), "Home page not yet loaded");
     }
 }

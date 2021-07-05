@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.helpers.ElementHelper;
 
 import java.util.Arrays;
 
@@ -134,7 +135,6 @@ public class ContactForm extends LoadableComponent<ContactForm> {
 
     @Override
     protected void isLoaded() throws Error {
-        // TODO Use util for elementNotPresent
-        Assert.assertFalse(driver.findElements(PAGE_LOADED_INDICATOR).isEmpty(), "Contact form is not loaded.");
+        Assert.assertTrue(ElementHelper.isElementByLocationPresent(driver, PAGE_LOADED_INDICATOR), "Contact form is not loaded.");
     }
 }

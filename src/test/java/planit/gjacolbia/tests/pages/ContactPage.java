@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.helpers.ElementHelper;
 import planit.gjacolbia.tests.components.ContactForm;
 
 public class ContactPage extends LoadableComponent<ContactPage> {
@@ -50,7 +51,6 @@ public class ContactPage extends LoadableComponent<ContactPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        // TODO Use util for elementNotPresent
-        Assert.assertFalse(driver.findElements(PAGE_LOADED_INDICATOR).isEmpty(), "Contact page not yet loaded.");
+        Assert.assertTrue(ElementHelper.isElementByLocationPresent(driver, PAGE_LOADED_INDICATOR), "Contact page not yet loaded.");
     }
 }
