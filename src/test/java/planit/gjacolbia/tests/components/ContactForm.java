@@ -12,11 +12,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
+import planit.gjacolbia.framework.helpers.PageHelper;
 import planit.gjacolbia.tests.pages.ContactFormSubmittedPage;
 
 import java.util.Arrays;
 
 @Log4j2
+// TODO Refactor this to create custom NestedPageComponent similar to LoadableComponent approach
+//
 public class ContactForm extends LoadableComponent<ContactForm> {
     public enum Field {
         FORENAME,
@@ -107,17 +110,8 @@ public class ContactForm extends LoadableComponent<ContactForm> {
     }
 
     private WebElement getWebElementReflection(Field formField, FieldType formFieldType) {
-        var classFields = ContactForm.class.getDeclaredFields();
         String webElementName = formField.name().toLowerCase() + formFieldType.text;
-        return Arrays.stream(classFields).filter(classField -> classField.getName().equals(webElementName)).map(this::mapToWebElement).findFirst().orElseThrow(() -> new Error("WebElement field with name " + webElementName + " not found in class."));
-    }
-
-    private WebElement mapToWebElement(java.lang.reflect.Field classField) {
-        try {
-            return (WebElement) classField.get(this);
-        } catch (IllegalAccessException e) {
-            throw new Error("classField should be of type WebElement before being passed to Mapper. Ensure that this has been filtered.");
-        }
+        return PageHelper.getElementViaReflection(this, webElementName);
     }
 
     public void fill(Field field, String text) {
