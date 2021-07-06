@@ -27,7 +27,7 @@ public class NavBar extends LoadableComponent<NavBar> {
     WebElement shopNav;
     @FindBy(id = "nav-contact")
     WebElement contactNav;
-    @FindBy()
+    @FindBy(id = "nav-cart")
     WebElement cartNav;
 
     public NavBar(WebDriver driver, LoadableComponent<?> parent) {
