@@ -11,8 +11,6 @@ import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
 
-import java.util.stream.IntStream;
-
 public class ShopProduct extends LoadableComponent<ShopProduct> {
     WebDriver driver;
 
