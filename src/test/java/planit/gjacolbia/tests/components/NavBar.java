@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
+import planit.gjacolbia.tests.pages.CartPage;
 import planit.gjacolbia.tests.pages.ContactPage;
+import planit.gjacolbia.tests.pages.ShopPage;
 
 public class NavBar extends LoadableComponent<NavBar> {
     private static final By PAGE_LOADED_INDICATOR = By.id("nav-contact");
@@ -25,6 +27,8 @@ public class NavBar extends LoadableComponent<NavBar> {
     WebElement shopNav;
     @FindBy(id = "nav-contact")
     WebElement contactNav;
+    @FindBy()
+    WebElement cartNav;
 
     public NavBar(WebDriver driver, LoadableComponent<?> parent) {
         this.driver = driver;
@@ -35,6 +39,16 @@ public class NavBar extends LoadableComponent<NavBar> {
     public ContactPage clickContact() {
         contactNav.click();
         return new ContactPage(driver).get();
+    }
+
+    public ShopPage clickShop() {
+        shopNav.click();
+        return new ShopPage(driver);
+    }
+
+    public CartPage clickCart() {
+        cartNav.click();
+        return new CartPage(driver);
     }
 
     @Override
