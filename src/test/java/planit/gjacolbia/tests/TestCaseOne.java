@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
 import planit.gjacolbia.tests.components.ContactForm;
+import planit.gjacolbia.tests.components.NavBar;
 import planit.gjacolbia.tests.pages.ContactPage;
 import planit.gjacolbia.tests.pages.HomePage;
 
@@ -31,7 +32,8 @@ public class TestCaseOne extends BaseTest {
         // 1. From the home page go to contact page
         HomePage homePage = new HomePage(driver);
         homePage.navigate();
-        ContactPage contactPage = homePage.clickContact();
+//        ContactPage contactPage = homePage.clickContact();
+        ContactPage contactPage = homePage.withNavBar().clickContact();
         // 2. Click submit button
         contactPage.withContactForm().clickSubmit();
         // 3. Validate errors

@@ -44,7 +44,7 @@ public class TestCaseTwo extends BaseTest {
 // * 1. From the home page go to contact page
         HomePage homePage = new HomePage(driver);
         homePage.navigate();
-        ContactPage contactPage = homePage.clickContact();
+        ContactPage contactPage = homePage.withNavBar().clickContact();
 // * 2. Populate mandatory fields
         contactPage.withContactForm().fill(ContactForm.Field.FORENAME, forename);
         contactPage.withContactForm().fill(ContactForm.Field.EMAIL, email);
