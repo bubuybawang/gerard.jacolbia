@@ -9,6 +9,9 @@ import org.openqa.selenium.opera.OperaDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.helpers.PageHelper;
+
+import java.io.IOException;
 
 public abstract class BaseTest {
     protected WebDriver driver;
@@ -34,7 +37,8 @@ public abstract class BaseTest {
     }
 
     @AfterTest
-    public void tearDown() {
+    public void tearDown() throws IOException {
+        PageHelper.takeScreenshot(driver);
         driver.quit();
     }
 

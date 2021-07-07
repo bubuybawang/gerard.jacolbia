@@ -28,6 +28,8 @@ public class CartBasket extends LoadableComponent<CartBasket> {
     WebElement cartItemsTable;
     @FindBy(xpath = "//table[contains(@class, 'cart-items')]//tr[contains(@class, 'cart-item')]")
     List<WebElement> cartItemRows;
+    @FindBy(xpath = "//table[contains(@class, 'cart-items')]/tfoot/tr//strong[contains(@class, 'total')]")
+    WebElement cartTotal;
 
     public CartBasket(WebDriver driver, LoadableComponent<?> parent) {
         this.driver = driver;
@@ -44,6 +46,11 @@ public class CartBasket extends LoadableComponent<CartBasket> {
 
     public List<CartItemModel> getCartItemModels() {
         return withCartItemModels();
+    }
+
+    public String getTotal() {
+        String rawTotal = cartTotal.getText();
+        return rawTotal.split(":")[1].strip();
     }
 
     @Override

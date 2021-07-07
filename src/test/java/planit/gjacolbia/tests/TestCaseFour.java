@@ -8,6 +8,7 @@ import planit.gjacolbia.tests.models.CartItemModel;
 import planit.gjacolbia.tests.pages.CartPage;
 import planit.gjacolbia.tests.pages.ShopPage;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -51,12 +52,20 @@ public class TestCaseFour extends BaseTest {
             Assert.fail("this should not happen since we are sure that we have products bought.");
         }
 // * 5. Verify that total = sum(sub totals)
-
+        String totalString = cartPage.withCartBasket().getTotal();
+        String expectedTotalString = getTotalFromCartItemModels(cartPage.withCartBasket().getCartItemModels()).toString();
+        Assert.assertEquals(totalString, expectedTotalString, String.format("The total amount displayed on cart page is correct. Expected is %s, actual is %s", expectedTotalString, totalString));
     }
 
     private CartItemModel getFilteredCartItemModel(CartItemModel cartItemModel, List<CartItemModel> cartItemModels) {
         return cartItemModels.stream()
                 .filter(cartItem -> cartItem.getProductName().equals(cartItemModel.getProductName()))
                 .findFirst().orElseThrow(() -> new NoSuchElementException(String.format("Unable to find %s from the expected cart items. Was this really bought?", cartItemModel.getProductName())));
+    }
+
+    private BigDecimal getTotalFromCartItemModels(List<CartItemModel> cartItemModels) {
+        return cartItemModels.stream()
+                .map(cartItemModel -> cartItemModel.getSubTotal().getAmount())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
