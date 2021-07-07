@@ -30,7 +30,6 @@ public class ShopProduct extends LoadableComponent<ShopProduct> {
 
     public ShopProduct(WebDriver driver, LoadableComponent<?> parent, String productName, BoughtProductsListener boughtProductsListener) {
         this(driver, parent, productName);
-        boughtProductsListeners = new ArrayList<>();
         boughtProductsListeners.add(boughtProductsListener);
     }
 
@@ -39,6 +38,7 @@ public class ShopProduct extends LoadableComponent<ShopProduct> {
         this.parent = parent;
         this.productName = productName;
         this.pageLoadedIndicator = By.xpath(String.format(productTitlePattern, productName));
+        boughtProductsListeners = new ArrayList<>();
         PageFactory.initElements(driver, this);
     }
 

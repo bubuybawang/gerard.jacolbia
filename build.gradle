@@ -28,3 +28,10 @@ dependencies {
 test {
     useTestNG()
 }
+
+task runAllTests(type: Test) {
+    useTestNG() {
+        useDefaultListeners = true
+        suites 'src/test/resources/suites/alltests.xml'
+    }
+}

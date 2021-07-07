@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="All Tests" verbose="1" parallel="false" >
+  <test name="AllTests" parallel="false">
+    <classes>
+      <class name="planit.gjacolbia.tests.TestCaseOne"/>
+      <class name="planit.gjacolbia.tests.TestCaseTwo"/>
+      <class name="planit.gjacolbia.tests.TestCaseThree"/>
+      <class name="planit.gjacolbia.tests.TestCaseFour"/>
+    </classes>
+  </test>
+</suite>
