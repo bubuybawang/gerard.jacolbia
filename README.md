@@ -57,10 +57,12 @@ that this is not much of an issue for PlanIt, but again in case this was not cle
 
     What approaches could you used to reduce overall execution time?
     * Run tests in parallel
+    * Run tests in grid for higher throughput capacity
     * Make tests data driven so tests could be re-used
     * Use API if available to set the state so no need to go through whole end to end flow. e.g. If process is A -> B -> C -> D, and API is available to set state to C, use it so no need to go through A and B.
     How will your framework cater for this?
     * Run tests in parallel, data driven -- framework is using testng, so just use a dataprovider and set parallel to true. But need refactoring of BaseTest class since WebDriver instance is not threadsafe.
+    * Current framework only uses a local WebDriver, but should be easy to update it using a RemoteWebDriver
     * Use API... -- framework no support for API calls. But I think possible to add, and refactor page objects/components. Since it uses LoadableComponent in a way that was not meant for it (load() method will not load
     the page, but instead wait for the page to actually load). Create own implementation similar to LoadableComponent, but use the load() method correctly i.e. it should actually load the page,
     and then have another method to wait for page to load, say waitForPage(). Call this in the get() method of the now refactored LoadableComponent class. Now if need to skip state/pages A and B, a call to C.get() would
