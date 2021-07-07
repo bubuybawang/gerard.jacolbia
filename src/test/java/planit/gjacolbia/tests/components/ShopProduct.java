@@ -22,11 +22,17 @@ public class ShopProduct extends LoadableComponent<ShopProduct> {
     LoadableComponent<?> parent;
     String productName;
     By pageLoadedIndicator;
+    List<BoughtProductsListener> boughtProductsListeners;
 
     String productTitlePattern = "//h4[contains(@class, 'product-title') and text() = '%s']";
     String productBuyButtonPattern = productTitlePattern + "/following-sibling::p/a[@class='btn btn-success' and text() = 'Buy']";
     String productPricePattern = productTitlePattern + "/following-sibling::p/span[contains(@class, 'product-price')]";
 
+    public ShopProduct(WebDriver driver, LoadableComponent<?> parent, String productName, BoughtProductsListener boughtProductsListener) {
+        this(driver, parent, productName);
+        boughtProductsListeners = new ArrayList<>();
+        boughtProductsListeners.add(boughtProductsListener);
+    }
 
     public ShopProduct(WebDriver driver, LoadableComponent<?> parent, String productName) {
         this.driver = driver;
@@ -36,15 +42,15 @@ public class ShopProduct extends LoadableComponent<ShopProduct> {
         PageFactory.initElements(driver, this);
     }
 
-    public CartItemModel clickBuy() {
-        return clickBuy(1);
+    public void clickBuy() {
+        clickBuy(1);
     }
 
-    public CartItemModel clickBuy(int quantity) {
+    public void clickBuy(int quantity) {
         for (int i = 0; i < quantity; i++) {
             this.withBuyButton().click();
         }
-        return new CartItemModel(productName, price(), quantity);
+        this.productBought(quantity);
     }
 
     public WebElement withBuyButton() {
@@ -53,6 +59,15 @@ public class ShopProduct extends LoadableComponent<ShopProduct> {
 
     public PriceModel price() {
         return PriceModel.of(driver.findElement(By.xpath(String.format(productPricePattern, this.productName))).getText());
+    }
+
+    public void addBoughtProductListener(BoughtProductsListener boughtProductsListener) {
+        this.boughtProductsListeners.add(boughtProductsListener);
+    }
+
+    private void productBought(int quantity) {
+        var cartItemModel = new CartItemModel(productName, this.price(), quantity);
+        boughtProductsListeners.forEach(boughtProductsListener -> boughtProductsListener.updateProductsBought(cartItemModel));
     }
 
     @Override

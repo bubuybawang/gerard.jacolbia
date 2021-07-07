@@ -42,6 +42,10 @@ public class CartBasket extends LoadableComponent<CartBasket> {
                 .collect(Collectors.toList());
     }
 
+    public List<CartItemModel> getCartItemModels() {
+        return withCartItemModels();
+    }
+
     @Override
     protected void load() {
         this.parent.get();

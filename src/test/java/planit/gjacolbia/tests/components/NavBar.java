@@ -48,7 +48,7 @@ public class NavBar extends LoadableComponent<NavBar> {
 
     public CartPage clickCart() {
         cartNav.click();
-        return new CartPage(driver);
+        return new CartPage(driver).get();
     }
 
     @Override

@@ -9,12 +9,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
+import planit.gjacolbia.tests.components.BoughtProductsListener;
 import planit.gjacolbia.tests.components.NavBar;
+import planit.gjacolbia.tests.components.ShopProduct;
 import planit.gjacolbia.tests.components.ShopProducts;
 
 public class ShopPage extends LoadableComponent<ShopPage> {
     WebDriver driver;
     private static final By PAGE_LOADED_INDICATOR = By.xpath("//div[contains(@class, 'products')]//li[contains(@class, 'product')]");
+    private static final String URL = "https://jupiter.cloud.planittesting.com/#/shop";
 
     ShopProducts shopProducts;
     NavBar navBar;
@@ -26,12 +29,21 @@ public class ShopPage extends LoadableComponent<ShopPage> {
         navBar = new NavBar(driver, this);
     }
 
+    public void navigate() {
+        driver.get(URL);
+        this.get();
+    }
+
     public NavBar withNavBar() {
         return navBar.get();
     }
 
     public ShopProducts withShopProducts() {
         return this.shopProducts.get();
+    }
+
+    public ShopProducts withShopProducts(BoughtProductsListener boughtProductsListener) {
+        return this.shopProducts.addBoughtProductsListener(boughtProductsListener).get();
     }
 
     @Override
