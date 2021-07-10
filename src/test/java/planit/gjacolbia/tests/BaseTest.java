@@ -14,32 +14,37 @@ import planit.gjacolbia.framework.helpers.PageHelper;
 import java.io.IOException;
 
 public abstract class BaseTest {
-    protected WebDriver driver;
+    // TODO Have a driver manager class and call it from here.
+    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     @BeforeMethod
     public void setUp() {
         switch (Configuration.get("browser").toLowerCase()) {
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
+                driver.set(new FirefoxDriver());
                 break;
             case "edge":
                 WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
+                driver.set(new EdgeDriver());
                 break;
             case "opera":
                 WebDriverManager.operadriver().setup();
-                driver = new OperaDriver();
+                driver.set(new OperaDriver());
             default:
                 WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+                driver.set(new ChromeDriver());
         }
     }
 
     @AfterMethod
     public void tearDown() throws IOException {
-        PageHelper.takeScreenshot(driver);
-        driver.quit();
+        PageHelper.takeScreenshot(getDriver());
+        getDriver().quit();
+    }
+
+    protected WebDriver getDriver() {
+        return driver.get();
     }
 
 }

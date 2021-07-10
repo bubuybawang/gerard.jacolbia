@@ -30,7 +30,7 @@ public class TestCaseOne extends BaseTest {
     @Test
     public void runTest() {
         // 1. From the home page go to contact page
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage.navigate();
 //        ContactPage contactPage = homePage.clickContact();
         ContactPage contactPage = homePage.withNavBar().clickContact();

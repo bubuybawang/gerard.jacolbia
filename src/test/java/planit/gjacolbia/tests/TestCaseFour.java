@@ -26,7 +26,7 @@ public class TestCaseFour extends BaseTest {
     @Test
     public void runTest() {
 // * 1. Buy 2 Stuffed Frog, 5 Fluffy Bunny, 3 Valentine Bear
-        ShopPage shopPage = new ShopPage(driver);
+        ShopPage shopPage = new ShopPage(getDriver());
         shopPage.navigate();
         SimpleBoughtProductsListener boughtProductsListener = new SimpleBoughtProductsListener();
         shopPage.withShopProducts(boughtProductsListener).withProduct("Stuffed Frog").clickBuy(2);

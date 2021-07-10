@@ -24,7 +24,7 @@ public class TestCaseThree extends BaseTest {
     @Test
     public void runTest() {
 // * 1. From the home page go to shop page
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage.navigate();
         ShopPage shopPage = homePage.withNavBar().clickShop();
 // * 2. Click buy button 2 times on “Funny Cow”

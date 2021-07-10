@@ -27,7 +27,7 @@ import planit.gjacolbia.tests.pages.HomePage;
  * Note: Run this test 5 times to ensure 100% pass rate
  */
 public class TestCaseTwo extends BaseTest {
-    @DataProvider(name = "testdata")
+    @DataProvider(name = "testdata", parallel = true)
     public Object[][] testData() {
         Faker faker = new Faker();
         return new Object[][] {
@@ -42,7 +42,7 @@ public class TestCaseTwo extends BaseTest {
     @Test(dataProvider = "testdata")
     public void runTest(String forename, String email, String message) {
 // * 1. From the home page go to contact page
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(getDriver());
         homePage.navigate();
         ContactPage contactPage = homePage.withNavBar().clickContact();
 // * 2. Populate mandatory fields
