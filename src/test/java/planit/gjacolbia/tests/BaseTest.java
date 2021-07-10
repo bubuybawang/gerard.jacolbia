@@ -6,10 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.framework.helpers.PageHelper;
 
@@ -18,7 +16,7 @@ import java.io.IOException;
 public abstract class BaseTest {
     protected WebDriver driver;
 
-    @BeforeClass
+    @BeforeMethod
     public void setUp() {
         switch (Configuration.get("browser").toLowerCase()) {
             case "firefox":
@@ -38,7 +36,7 @@ public abstract class BaseTest {
         }
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() throws IOException {
         PageHelper.takeScreenshot(driver);
         driver.quit();
