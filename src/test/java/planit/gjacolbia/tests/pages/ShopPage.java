@@ -7,11 +7,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.configuration.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
 import planit.gjacolbia.tests.components.BoughtProductsListener;
 import planit.gjacolbia.tests.components.NavBar;
-import planit.gjacolbia.tests.components.ShopProduct;
 import planit.gjacolbia.tests.components.ShopProducts;
 
 public class ShopPage extends LoadableComponent<ShopPage> {
@@ -31,6 +30,7 @@ public class ShopPage extends LoadableComponent<ShopPage> {
 
     public void navigate() {
         driver.get(URL);
+        driver.manage().window().maximize();
         this.get();
     }
 

@@ -19,6 +19,7 @@ public abstract class BaseTest {
     public void tearDown() throws IOException {
         PageHelper.takeScreenshot(getDriver());
         getDriver().quit();
+        DriverManager.reset();
     }
 
     protected WebDriver getDriver() {

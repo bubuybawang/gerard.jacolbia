@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.SlowLoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.configuration.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
 
 import java.time.Clock;

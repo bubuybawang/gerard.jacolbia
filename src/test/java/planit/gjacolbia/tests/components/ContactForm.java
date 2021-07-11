@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.configuration.Configuration;
 import planit.gjacolbia.framework.helpers.ElementHelper;
 import planit.gjacolbia.framework.helpers.PageHelper;
 import planit.gjacolbia.tests.pages.ContactFormSubmittedPage;

@@ -1,18 +1,9 @@
 package planit.gjacolbia.tests;
 
 import com.github.javafaker.Faker;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import planit.gjacolbia.framework.Configuration;
 import planit.gjacolbia.tests.components.ContactForm;
 import planit.gjacolbia.tests.pages.ContactFormSubmittedPage;
 import planit.gjacolbia.tests.pages.ContactPage;

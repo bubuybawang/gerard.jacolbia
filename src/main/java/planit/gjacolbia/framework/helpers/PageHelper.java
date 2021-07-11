@@ -7,7 +7,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.Augmenter;
-import planit.gjacolbia.framework.Configuration;
+import planit.gjacolbia.framework.configuration.Configuration;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +25,8 @@ public final class PageHelper {
 
     public static void takeScreenshot(WebDriver driver, String destination) throws IOException {
         WebDriver augmentedDriver = new Augmenter().augment(driver);
-        var srcFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-        var output = new File(destination);
-        FileUtils.copyFile(srcFile, output);
+        var screenshotBytes = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.BYTES);
+        FileUtils.writeByteArrayToFile(new File(destination), screenshotBytes);
     }
 
     public static WebElement getElementViaReflection(Object obj, String elementName) {
